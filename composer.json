@@ -1,0 +1,13 @@
+{
+    "name": "nejgauz/writing-own-php-framework",
+    "description": "self-made php framework",
+    "type": "framework",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Анна",
+            "email": "shesterikofff@mail.ru"
+        }
+    ],
+    "require": {}
+}
