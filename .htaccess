@@ -1,0 +1,4 @@
+RewriteEngine on
+
+# Отправлять все запросы на index.php
+RewriteRule . index.php
