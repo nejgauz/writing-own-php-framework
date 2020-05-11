@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace MyFramework;
 
@@ -12,7 +13,7 @@ class ControllerClass implements ControllerInterface
      * @param Request $request
      * @return Response
      */
-    public function getResponse(Request $request)
+    public function getResponse(Request $request): Response
     {
         $response = new Response();
         $response->prepare($request);

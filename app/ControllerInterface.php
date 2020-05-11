@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 
 namespace MyFramework;
 
@@ -13,5 +13,5 @@ interface ControllerInterface
      * @param Request $request
      * @return Response
      */
-    public function getResponse(Request $request);
+    public function getResponse(Request $request): Response;
 }
