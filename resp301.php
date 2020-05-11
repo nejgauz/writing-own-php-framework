@@ -1,12 +1,6 @@
 <?php
 require_once('vendor/autoload.php');
-use Symfony\Component\HttpFoundation\Response;
-$content = '<h1>Error 301</h1> <h2>The resource moved permanently. Please <a href="\resp200.php">click here</a> to redirect.</h2>';
-$response = new Response(
-    $content,
-    Response::HTTP_MOVED_PERMANENTLY,
-    [
-        'cache-control' => 'public',
-    ]
-);
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+$response = new RedirectResponse('\resp200.php', 301);
 $response->send();
