@@ -15,9 +15,6 @@ class ControllerClass implements ControllerInterface
      */
     public function getResponse(Request $request): Response
     {
-        $response = new Response();
-        $response->prepare($request);
-
-        return $response;
+        return new Response();
     }
 }
