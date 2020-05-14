@@ -1,13 +1,12 @@
 <?php
-declare(strict_types=1);
-
-namespace MyFramework;
+namespace MyFramework\Controllers;
 
 
+use MyFramework\ControllerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ControllerClass implements ControllerInterface
+class AController implements ControllerInterface
 {
     /**
      * @param Request $request
@@ -15,6 +14,11 @@ class ControllerClass implements ControllerInterface
      */
     public function getResponse(Request $request): Response
     {
-        return new Response();
+        $response = new Response(
+            '<h1>AController</h1>'
+        );
+        return $response;
     }
+
+
 }
