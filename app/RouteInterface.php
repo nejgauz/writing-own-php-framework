@@ -3,14 +3,13 @@
 
 namespace MyFramework;
 
-use MyFramework\ControllerInterface;
 
 interface RouteInterface
 {
     /**
      * @return \MyFramework\ControllerInterface
      */
-    public function getController(): ControllerInterface;
+    public function getController();
 
     /**
      * @param string $url
