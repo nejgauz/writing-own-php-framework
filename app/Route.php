@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 
 namespace MyFramework;
 
@@ -12,27 +12,26 @@ class Route implements RouteInterface
     protected $url;
 
     /**
-     * @var object
+     * @var ControllerInterface
      */
     protected $controller;
 
     /**
      * Route constructor.
      * @param string $url
-     * @param object $controller
+     * @param ControllerInterface $controller
      */
-    public function __construct(string $url, $controller)
+    public function __construct(string $url, ControllerInterface $controller)
     {
         $this->url = $url;
         $this->controller = $controller;
-
     }
 
     /**
      * Возвращает объект контроллера, привязанный к объекту класса
      * @return ControllerInterface|object
      */
-    public function getController()
+    public function getController(): ControllerInterface
     {
         return $this->controller;
     }

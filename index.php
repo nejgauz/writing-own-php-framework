@@ -21,7 +21,10 @@ foreach ($routes as $route) {
     }
 }
 
-$response = $controller->getResponse($request);
-$response->send();
+if (isset($controller)) {
+    $response = $controller->getResponse($request);
+    $response->send();
+}
+
 
 
