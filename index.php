@@ -4,6 +4,8 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 use MyFramework\Controllers\AController;
 use MyFramework\Controllers\BController;
+use MyFramework\Controllers\CController;
+use MyFramework\QueryRoute;
 use MyFramework\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -12,6 +14,7 @@ $request = Request::createFromGlobals();
 $routes = [];
 $routes[] = new Route('/a', new AController(), 'GET');
 $routes[] = new Route('/b', new BController(), 'GET');
+$routes[] = new QueryRoute('/c', new CController(), 'GET', 'test');
 
 
 foreach ($routes as $route) {
