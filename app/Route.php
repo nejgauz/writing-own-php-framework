@@ -52,7 +52,11 @@ class Route implements RouteInterface
      */
     public function isRequestAcceptable(Request $request): bool
     {
-        if (!($request->server->get('REQUEST_URI') === $this->url)) {
+        $uri = $request->server->get('REQUEST_URI');
+        if (strstr($uri, '?')) {
+            $uri = stristr($uri, '?', true);
+        }
+        if (!($uri === $this->url)) {
             return false;
         }
         if (!($request->isMethod($this->method))) {
