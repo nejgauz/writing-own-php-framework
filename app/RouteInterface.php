@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace MyFramework;
 
 
+use Symfony\Component\HttpFoundation\Request;
+
 interface RouteInterface
 {
     /**
@@ -13,9 +15,9 @@ interface RouteInterface
     public function getController(): ControllerInterface;
 
     /**
-     * @param string $url
+     * @param Request $request
      * @return bool
      */
-    public function isUrlAcceptable(string $url): bool;
+    public function isRequestAcceptable(Request $request): bool;
 
 }
