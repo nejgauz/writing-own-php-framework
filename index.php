@@ -8,15 +8,15 @@ use MyFramework\Route;
 use Symfony\Component\HttpFoundation\Request;
 
 $request = Request::createFromGlobals();
-$uri = $request->server->get('REQUEST_URI');
 
 $routes = [];
-$routes[] = new Route('/a', new AController());
-$routes[] = new Route('/b', new BController());
+$routes[] = new Route('/a', new AController(), 'GET');
+$routes[] = new Route('/b', new BController(), 'GET');
+
 
 foreach ($routes as $route) {
-    if ($route->isUrlAcceptable($uri)) {
-        $controller = $route->getController;
+    if ($route->isRequestAcceptable($request)) {
+        $controller = $route->getController();
         break;
     }
 }
