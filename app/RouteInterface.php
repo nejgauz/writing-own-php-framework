@@ -20,4 +20,14 @@ interface RouteInterface
      */
     public function isRequestAcceptable(Request $request): bool;
 
+    /**
+     * @return string имя роута формата 'news.list'
+     */
+    public function name(): string;
+
+    /**
+     * @return string урл роута вида `/news`
+     */
+    public function url(): string;
+
 }

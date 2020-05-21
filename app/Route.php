@@ -65,4 +65,25 @@ class Route implements RouteInterface
         return true;
     }
 
+    /**
+     * @return string имя роута формата 'news.list'
+     */
+    public function name(): string
+    {
+        $name = substr($this->url, 1);
+        if (!strpos($name, '/')) {
+            return $name;
+        }
+        $subNames = explode('/', $name);
+        foreach ($subNames as $subName) {
+            $name .= '.' . $subName;
+        }
+        return $name;
+    }
+
+    public function url(): string
+    {
+        return $this->url;
+    }
+
 }
