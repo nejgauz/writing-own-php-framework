@@ -14,4 +14,6 @@ interface ControllerInterface
      * @return Response
      */
     public function getResponse(Request $request): Response;
+
+    public function addContent(string $content);
 }
