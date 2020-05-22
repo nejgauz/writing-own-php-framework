@@ -7,7 +7,7 @@ use MyFramework\ControllerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class BController implements ControllerInterface
+class CController implements ControllerInterface
 {
     /**
      * @param Request $request
@@ -16,7 +16,7 @@ class BController implements ControllerInterface
     public function getResponse(Request $request): Response
     {
         $response = new Response(
-            '<h1>BController</h1>'
+            '<h1>CController</h1>'
         );
         return $response;
     }
