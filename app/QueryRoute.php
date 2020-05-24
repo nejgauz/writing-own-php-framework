@@ -19,11 +19,12 @@ class QueryRoute extends Route
      * @param string $url
      * @param ControllerInterface $controller
      * @param string $method
+     * @param string $name
      * @param string $getParameter
      */
-    public function __construct(string $url, ControllerInterface $controller, string $method, string $getParameter)
+    public function __construct(string $url, ControllerInterface $controller, string $method, string $name, string $getParameter)
     {
-        parent::__construct($url, $controller, $method);
+        parent::__construct($url, $controller, $method, $name);
         $this->getParameter = $getParameter;
     }
 

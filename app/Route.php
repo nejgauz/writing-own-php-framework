@@ -23,18 +23,24 @@ class Route implements RouteInterface
      */
     protected $method;
 
+    /**
+     * @var string
+     */
+    protected $name;
 
     /**
      * Route constructor.
      * @param string $url
      * @param ControllerInterface $controller
      * @param string $method
+     * @param string $name
      */
-    public function __construct(string $url, ControllerInterface $controller, string $method)
+    public function __construct(string $url, ControllerInterface $controller, string $method, string $name)
     {
         $this->url = $url;
         $this->controller = $controller;
         $this->method = $method;
+        $this->name = $name;
     }
 
     /**
@@ -70,15 +76,7 @@ class Route implements RouteInterface
      */
     public function name(): string
     {
-        $name = substr($this->url, 1);
-        if (!strpos($name, '/')) {
-            return $name;
-        }
-        $subNames = explode('/', $name);
-        foreach ($subNames as $subName) {
-            $name .= '.' . $subName;
-        }
-        return $name;
+        return $this->name;
     }
 
     public function url(): string
