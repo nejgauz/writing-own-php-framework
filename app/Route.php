@@ -23,18 +23,24 @@ class Route implements RouteInterface
      */
     protected $method;
 
+    /**
+     * @var string
+     */
+    protected $name;
 
     /**
      * Route constructor.
      * @param string $url
      * @param ControllerInterface $controller
      * @param string $method
+     * @param string $name
      */
-    public function __construct(string $url, ControllerInterface $controller, string $method)
+    public function __construct(string $url, ControllerInterface $controller, string $method, string $name)
     {
         $this->url = $url;
         $this->controller = $controller;
         $this->method = $method;
+        $this->name = $name;
     }
 
     /**
@@ -63,6 +69,19 @@ class Route implements RouteInterface
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return string имя роута формата 'news.list'
+     */
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function url(): string
+    {
+        return $this->url;
     }
 
 }

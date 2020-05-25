@@ -3,11 +3,11 @@ declare(strict_types=1);
 namespace MyFramework\Controllers;
 
 
-use MyFramework\ControllerInterface;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CController implements ControllerInterface
+class CController extends ControllerClass
 {
     /**
      * @param Request $request
@@ -20,5 +20,6 @@ class CController implements ControllerInterface
         );
         return $response;
     }
+
 
 }

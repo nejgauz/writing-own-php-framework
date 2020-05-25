@@ -3,11 +3,11 @@ declare(strict_types=1);
 namespace MyFramework\Controllers;
 
 
-use MyFramework\ControllerInterface;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AController implements ControllerInterface
+class AController extends ControllerClass
 {
     /**
      * @param Request $request
@@ -16,10 +16,9 @@ class AController implements ControllerInterface
     public function getResponse(Request $request): Response
     {
         $response = new Response(
-            '<h1>AController</h1>'
+            '<h1>' . $this->router->buildRoute('a') . '</h1>'
         );
         return $response;
     }
-
 
 }
