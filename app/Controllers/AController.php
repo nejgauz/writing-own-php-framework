@@ -4,11 +4,21 @@ namespace MyFramework\Controllers;
 
 
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 class AController extends ControllerClass
 {
     /**
-     * @var string
+     * @param Request $request
+     * @return Response
      */
-    protected $content = '<h1>AController</h1>';
+    public function getResponse(Request $request): Response
+    {
+        $response = new Response(
+            '<h1>' . $this->router->buildRoute('a') . '</h1>'
+        );
+        return $response;
+    }
 
 }

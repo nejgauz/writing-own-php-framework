@@ -4,12 +4,22 @@ namespace MyFramework\Controllers;
 
 
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 class CController extends ControllerClass
 {
     /**
-     * @var string
+     * @param Request $request
+     * @return Response
      */
-    protected $content = '<h1>CController</h1>';
+    public function getResponse(Request $request): Response
+    {
+        $response = new Response(
+            '<h1>CController</h1>'
+        );
+        return $response;
+    }
 
 
 }

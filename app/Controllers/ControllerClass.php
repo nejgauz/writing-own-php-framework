@@ -5,15 +5,25 @@ namespace MyFramework\Controllers;
 
 
 use MyFramework\ControllerInterface;
+use MyFramework\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ControllerClass implements ControllerInterface
 {
     /**
-     * @var string
+     * @var Router объект
      */
-    protected $content = '<h1>ControllerClass</h1>';
+    protected $router;
+
+    /**
+     * ControllerClass constructor.
+     * @param Router $router
+     */
+    public function __construct(Router $router)
+    {
+        $this->router = $router;
+    }
 
     /**
      * @param Request $request
@@ -22,19 +32,12 @@ class ControllerClass implements ControllerInterface
     public function getResponse(Request $request): Response
     {
         $response = new Response(
-            $this->content
+            '<h1>ControllerClass</h1>'
         );
         return $response;
     }
 
-    /**
-     * @param string $content
-     */
-    public function addContent(string $content)
-    {
-        if ($content) {
-            $this->content = $content;
-        }
-    }
+
+
 
 }

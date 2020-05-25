@@ -15,5 +15,5 @@ interface ControllerInterface
      */
     public function getResponse(Request $request): Response;
 
-    public function addContent(string $content);
+
 }
