@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace MyFramework;
 
 
+use MyFramework\MyExceptions\RouteNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
 class Router
@@ -24,21 +25,23 @@ class Router
 
     /**
      * @param Request $request
-     * @return ControllerInterface|null возвращает контроллер в соответствии с запросом
+     * @return ControllerInterface возвращает контроллер в соответствии с запросом
+     * @throws RouteNotFoundException
      */
-    public function getController(Request $request):? ControllerInterface
+    public function getController(Request $request): ControllerInterface
     {
         foreach ($this->routes as $route) {
            if ($route->isRequestAcceptable($request)) {
                return $route->getController();
            }
         }
-        return null;
+        throw new RouteNotFoundException('Данный маршрут не найден');
     }
 
     /**
      * @param string $name
      * @return string возвращает урл по имени роута
+     * @throws RouteNotFoundException
      */
     public function buildRoute(string $name): string
     {
@@ -47,7 +50,7 @@ class Router
                 return $route->url();
             }
         }
-
+        throw new RouteNotFoundException("Роута с именем '$name' не существует");
     }
 
 }
