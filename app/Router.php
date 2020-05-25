@@ -35,7 +35,7 @@ class Router
                return $route->getController();
            }
         }
-        throw new RouteNotFoundException('Данный маршрут не найден');
+        throw new RouteNotFoundException();
     }
 
     /**
@@ -50,7 +50,7 @@ class Router
                 return $route->url();
             }
         }
-        throw new RouteNotFoundException("Роута с именем '$name' не существует");
+        throw new RouteNotFoundException();
     }
 
 }
