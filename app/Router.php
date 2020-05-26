@@ -14,6 +14,7 @@ class Router
      */
     protected $routes = [];
 
+
     /**
      * Добавляет роуты в массив с роутами
      * @param RouteInterface $route
@@ -50,6 +51,28 @@ class Router
                 return $route->url();
             }
         }
+        throw new RouteNotFoundException();
+    }
+
+    /**
+     * Строит урл для запроса с параметром
+     * @param string $name
+     * @param string $parameter
+     * @param string $value
+     * @return string
+     * @throws RouteNotFoundException
+     */
+    public function buildQueryRoute(string $name, string $parameter, string $value): string
+    {
+        foreach ($this->routes as $route) {
+            if ($route->name() === $name & $route instanceof QueryRoute) {
+                if ($route->getParameterName() === $parameter & preg_match($route->getParameterPattern(), $value)) {
+                    return $route->url() . '/' . $value;
+                }
+            }
+
+        }
+
         throw new RouteNotFoundException();
     }
 

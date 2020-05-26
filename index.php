@@ -17,7 +17,7 @@ $request = Request::createFromGlobals();
 $router = new Router();
 $router->addRoute(new Route('/a', new AController($router), 'GET', 'a'));
 $router->addRoute(new Route('/b', new BController($router), 'GET', 'b'));
-$router->addRoute(new QueryRoute('/c', new CController($router), 'GET', 'c','test'));
+$router->addRoute(new QueryRoute('/c', new CController($router), 'GET', 'c','test', '~[0-9]{1,10}~', '~^/c/[0-9]{1,10}$~'));
 
 try {
     $controller = $router->getController($request);

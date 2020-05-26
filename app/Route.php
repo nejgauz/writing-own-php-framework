@@ -31,9 +31,9 @@ class Route implements RouteInterface
     /**
      * Route constructor.
      * @param string $url
-     * @param ControllerInterface $controller
-     * @param string $method
-     * @param string $name
+     * @param ControllerInterface $controller контроллер, обрабатывающий роут
+     * @param string $method метод, на который реагирует роут
+     * @param string $name имя роута
      */
     public function __construct(string $url, ControllerInterface $controller, string $method, string $name)
     {
@@ -62,10 +62,10 @@ class Route implements RouteInterface
         if (strstr($uri, '?')) {
             $uri = stristr($uri, '?', true);
         }
-        if (!($uri === $this->url)) {
+        if ($uri !== $this->url) {
             return false;
         }
-        if (!($request->isMethod($this->method))) {
+        if (!$request->isMethod($this->method)) {
             return false;
         }
         return true;

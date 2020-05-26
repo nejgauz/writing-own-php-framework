@@ -16,7 +16,7 @@ class AController extends ControllerClass
     public function getResponse(Request $request): Response
     {
         $response = new Response(
-            '<h1>' . $this->router->buildRoute('a') . '</h1>'
+            '<h1>' . $this->router->buildQueryRoute('c', 'test', '300') . '</h1>'
         );
         return $response;
     }
