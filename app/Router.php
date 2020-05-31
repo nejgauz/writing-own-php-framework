@@ -65,8 +65,8 @@ class Router
     public function buildQueryRoute(string $name, string $parameter, string $value): string
     {
         foreach ($this->routes as $route) {
-            if ($route->name() === $name & $route instanceof QueryRoute) {
-                if ($route->getParameterName() === $parameter & preg_match($route->getParameterPattern(), $value)) {
+            if ($route->name() === $name && $route instanceof QueryRoute) {
+                if ($route->getParameterName() === $parameter && preg_match($route->getParameterPattern(), $value)) {
                     return $route->url() . '/' . $value;
                 }
             }
