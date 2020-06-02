@@ -37,7 +37,4 @@ class ControllerClass implements ControllerInterface
         return $response;
     }
 
-
-
-
 }

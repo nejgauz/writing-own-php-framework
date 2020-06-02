@@ -74,12 +74,12 @@ class Route implements RouteInterface
     /**
      * @return string имя роута формата 'news.list'
      */
-    public function name(): string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function url(): string
+    public function getUrl(): string
     {
         return $this->url;
     }
