@@ -5,41 +5,36 @@ declare(strict_types=1);
 namespace MyFramework;
 
 
+use MyFramework\MyExceptions\ParameterDoesntFitException;
+use MyFramework\MyExceptions\RequestDoesntFitException;
 use Symfony\Component\HttpFoundation\Request;
 
 class QueryRoute extends Route
 {
     /**
-     * @var string $parameterName
+     * @var string $urlFormat шаблон для подстановки параметров
      */
-    protected $parameterName;
+    protected $urlFormat;
 
     /**
-     * @var string regex
+     * @var string regex паттерн для параметра
      */
     protected $parameterPattern;
 
     /**
-     * @var string $urlPattern regex для всего урла
-     */
-    protected $urlPattern;
-
-    /**
      * QueryRoute constructor.
-     * @param string $url
+     * @param string $url regex паттерн для всего урла
      * @param ControllerInterface $controller контроллер, обрабатывающий роут
      * @param string $method метод запроса, на который отвечает роут
      * @param string $name название роута
-     * @param string $parameterName название параметра
-     * @param string $parameterPattern строка с регулярным выражением - паттерн для параметра без ограничительных знаков
-     * @param string $urlPattern regex для всего урла
+     * @param string $urlFormat шаблон для подстановки параметров
+     * @param string $parameterPattern regex паттерн для параметра
      */
-    public function __construct(string $url, ControllerInterface $controller, string $method, string $name, string $parameterName, string $parameterPattern, string $urlPattern)
+    public function __construct(string $url, ControllerInterface $controller, string $method, string $name, string $urlFormat, string $parameterPattern)
     {
         parent::__construct($url, $controller, $method, $name);
-        $this->parameterName = $parameterName;
+        $this->urlFormat = $urlFormat;
         $this->parameterPattern = $parameterPattern;
-        $this->urlPattern = $urlPattern;
     }
 
     /**
@@ -50,7 +45,7 @@ class QueryRoute extends Route
     public function isRequestAcceptable(Request $request): bool
     {
         $requestUrl = $request->server->get('REQUEST_URI');
-        if (!preg_match($this->urlPattern, $requestUrl)) {
+        if (!preg_match($this->url, $requestUrl)) {
             return false;
         }
         if (!$request->isMethod($this->method)) {
@@ -61,19 +56,34 @@ class QueryRoute extends Route
     }
 
     /**
-     * @return string имя параметра
+     * @param string $value
+     * @return string
+     * @throws ParameterDoesntFitException
      */
-    public function getParameterName(): string
+    public function buildUrl($value): string
     {
-        return $this->parameterName;
+        if (preg_match($this->parameterPattern, $value)) {
+            return sprintf($this->urlFormat, $value);
+        }
+
+        throw new ParameterDoesntFitException();
     }
 
     /**
-     * @return string паттерн для параметра
+     * @param Request $request
+     * @return array
+     * @throws RequestDoesntFitException
      */
-    public function getParameterPattern(): string
+    public function getParameters(Request $request): array
     {
-        return $this->parameterPattern;
+        if ($this->isRequestAcceptable($request)) {
+            $requestUrl = $request->server->get('REQUEST_URI');
+            preg_match($this->url, $requestUrl, $parameters);
+            $parameters[0] = false;
+            return array_filter($parameters);
+        }
+
+        throw new RequestDoesntFitException();
     }
 
 }

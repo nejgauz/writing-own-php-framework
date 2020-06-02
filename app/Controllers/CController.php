@@ -16,7 +16,7 @@ class CController extends ControllerClass
     public function getResponse(Request $request): Response
     {
         $response = new Response(
-            '<h1>CController</h1>'
+            var_dump($this->router->getParametersFromRequest($request))
         );
         return $response;
     }
