@@ -15,5 +15,10 @@ interface ControllerInterface
      */
     public function getResponse(Request $request): Response;
 
+    /**
+     * @param callable $callback
+     * @return mixed
+     */
+    public function addParameterExtractor(callable $callback);
 
 }

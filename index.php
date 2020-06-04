@@ -18,7 +18,7 @@ $request = Request::createFromGlobals();
 $router = new Router();
 $router->addRoute(new Route('/a', new AController($router), 'GET', 'a'));
 $router->addRoute(new Route('/b', new BController($router), 'GET', 'b'));
-$router->addRoute(new QueryRoute('~^/c/([0-9]{1,10})/profile$~', new CController($router), 'GET', 'c', '/c/%d/profile', '/[0-9]{1,10}/'));
+$router->addRoute(new QueryRoute('~^/c/([1-9][0-9]{1,9})/profile$~', new CController($router), 'GET', 'c', '/c/%d/profile', '/^[1-9][0-9]{1,9}/'));
 
 try {
     $controller = $router->getController($request);

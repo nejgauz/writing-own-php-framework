@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 class ControllerClass implements ControllerInterface
 {
     /**
+     * @var $parameterExtractor - функция обратного вызова
+     */
+    protected $parameterExtractor;
+    /**
      * @var Router объект
      */
     protected $router;
@@ -35,6 +39,14 @@ class ControllerClass implements ControllerInterface
             '<h1>ControllerClass</h1>'
         );
         return $response;
+    }
+
+    /**
+     * @param callable $callback
+     */
+    public function addParameterExtractor(callable $callback)
+    {
+        $this->parameterExtractor = $callback;
     }
 
 }

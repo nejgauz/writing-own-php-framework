@@ -35,6 +35,17 @@ class QueryRoute extends Route
         parent::__construct($url, $controller, $method, $name);
         $this->urlFormat = $urlFormat;
         $this->parameterPattern = $parameterPattern;
+        $extractor = function (Request $request) {
+            if ($this->isRequestAcceptable($request)) {
+                $requestUrl = $request->server->get('REQUEST_URI');
+                preg_match($this->url, $requestUrl, $parameters);
+                $parameters[0] = false;
+                return array_filter($parameters);
+            }
+
+            throw new RequestDoesntFitException();
+        };
+        $controller->addParameterExtractor($extractor);
     }
 
     /**
@@ -67,23 +78,6 @@ class QueryRoute extends Route
         }
 
         throw new ParameterDoesntFitException();
-    }
-
-    /**
-     * @param Request $request
-     * @return array
-     * @throws RequestDoesntFitException
-     */
-    public function getParameters(Request $request): array
-    {
-        if ($this->isRequestAcceptable($request)) {
-            $requestUrl = $request->server->get('REQUEST_URI');
-            preg_match($this->url, $requestUrl, $parameters);
-            $parameters[0] = false;
-            return array_filter($parameters);
-        }
-
-        throw new RequestDoesntFitException();
     }
 
 }

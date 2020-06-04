@@ -73,21 +73,5 @@ class Router
         throw new RouteNotFoundException();
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     * @throws RouteNotFoundException
-     */
-    public function getParametersFromRequest(Request $request): array
-    {
-        foreach ($this->routes as $route) {
-            if ($route->isRequestAcceptable($request)) {
-                return $route->getParameters($request);
-            }
-        }
-
-        throw new RouteNotFoundException();
-
-    }
 
 }
