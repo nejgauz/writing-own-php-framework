@@ -40,37 +40,26 @@ class Router
     }
 
     /**
-     * @param string $name
+     * @param string $name имя роута, урл которого нужно построить
+     * @param bool $value параметр для роута с параметрами, по умолчанию false
      * @return string возвращает урл по имени роута
      * @throws RouteNotFoundException
      */
-    public function buildRoute(string $name): string
+    public function buildRoute(string $name, $value = false): string
     {
         foreach ($this->routes as $route) {
             if ($route->getName() === $name) {
-                return $route->getUrl();
+                $requiredRoute = $route;
+                break;
             }
         }
-        throw new RouteNotFoundException();
-    }
-
-    /**
-     * Строит урл для запроса с параметром
-     * @param string $name имя роута
-     * @param string $value значение параметра
-     * @return string
-     * @throws RouteNotFoundException
-     */
-    public function buildQueryRoute(string $name, string $value): string
-    {
-        foreach ($this->routes as $route) {
-            if ($route->getName() === $name && $route instanceof QueryRoute) {
-                return $route->buildUrl($value);
-            }
-
+        if (!isset($requiredRoute)) {
+            throw new RouteNotFoundException();
         }
-
-        throw new RouteNotFoundException();
+        if ($value && $requiredRoute instanceof QueryRoute) {
+            return $requiredRoute->buildUrl($value);
+        }
+        return $requiredRoute->getUrl();
     }
 
 
