@@ -6,6 +6,7 @@ namespace MyFramework;
 
 
 use MyFramework\MyExceptions\ParameterDoesntFitException;
+use MyFramework\MyExceptions\ParameterNotFoundException;
 use MyFramework\MyExceptions\RequestDoesntFitException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,7 +18,7 @@ class QueryRoute extends Route
     protected $urlFormat;
 
     /**
-     * @var string regex паттерн для параметра
+     * @var array of strings regex паттернов для всех параметров
      */
     protected $parameterPattern;
 
@@ -28,9 +29,9 @@ class QueryRoute extends Route
      * @param string $method метод запроса, на который отвечает роут
      * @param string $name название роута
      * @param string $urlFormat шаблон для подстановки параметров
-     * @param string $parameterPattern regex паттерн для параметра
+     * @param array $parameterPattern regex паттерн для параметра
      */
-    public function __construct(string $url, ControllerInterface $controller, string $method, string $name, string $urlFormat, string $parameterPattern)
+    public function __construct(string $url, ControllerInterface $controller, string $method, string $name, string $urlFormat, string ...$parameterPattern)
     {
         parent::__construct($url, $controller, $method, $name);
         $this->urlFormat = $urlFormat;
@@ -67,17 +68,32 @@ class QueryRoute extends Route
     }
 
     /**
-     * @param string $value
-     * @return string
+     * @param array $value массив со значениями параметров вида ['параметр1', 'параметр2' ...]
+     * @return string построенный урл
      * @throws ParameterDoesntFitException
+     * @throws ParameterNotFoundException
      */
-    public function buildUrl($value): string
+    public function getUrl(...$value): string
     {
-        if (preg_match($this->parameterPattern, $value)) {
-            return sprintf($this->urlFormat, $value);
+        if (!$value) {
+            throw new ParameterNotFoundException();
+        }
+        $value = $value[0];
+        if (count($value) !== count($this->parameterPattern)) {
+            throw new ParameterNotFoundException();
+        }
+        $length = count($value);
+        $patterns = [];
+        for ($i = 0; $i < $length; $i++) {
+           $patterns[$this->parameterPattern[$i]] = $value[$i];
+        }
+        foreach ($patterns as $pattern => $parameter) {
+            if (!preg_match($pattern, $parameter)) {
+                throw new ParameterDoesntFitException();
+            }
         }
 
-        throw new ParameterDoesntFitException();
+        return sprintf($this->urlFormat, ...$value);
     }
 
 }

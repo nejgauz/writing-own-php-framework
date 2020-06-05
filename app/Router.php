@@ -41,11 +41,11 @@ class Router
 
     /**
      * @param string $name имя роута, урл которого нужно построить
-     * @param bool $value параметр для роута с параметрами, по умолчанию false
+     * @param string $value параметр для роута с параметрами, по умолчанию
      * @return string возвращает урл по имени роута
      * @throws RouteNotFoundException
      */
-    public function buildRoute(string $name, $value = false): string
+    public function buildRoute(string $name, string ...$value): string
     {
         foreach ($this->routes as $route) {
             if ($route->getName() === $name) {
@@ -56,10 +56,8 @@ class Router
         if (!isset($requiredRoute)) {
             throw new RouteNotFoundException();
         }
-        if ($value && $requiredRoute instanceof QueryRoute) {
-            return $requiredRoute->buildUrl($value);
-        }
-        return $requiredRoute->getUrl();
+
+        return $requiredRoute->getUrl($value);
     }
 
 

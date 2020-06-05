@@ -79,8 +79,23 @@ class Route implements RouteInterface
         return $this->name;
     }
 
-    public function getUrl(): string
+    /**
+     * @param array $value вида ['название_параметра=значение_параметра', ...]
+     * @return string построенный урл
+     */
+    public function getUrl(...$value): string
     {
+        if (!empty($value)) {
+            $url = $this->url . '?';
+            $limit = count($value) - 1;
+            $i = 0;
+            while ($i < $limit) {
+                $url .= $value[$i] . '&';
+                $i++;
+            }
+            $url .= $value[$limit];
+            return $url;
+        }
         return $this->url;
     }
 
