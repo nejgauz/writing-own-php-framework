@@ -22,8 +22,9 @@ $router->addRoute(new Route('/b', new BController($router), 'GET', 'b'));
 $router->addRoute(new QueryRoute('~^/c/([1-9][0-9]{1,9})/profile/([abcdef])$~', new CController($router), 'GET', 'c', '/c/%d/profile/%s', '/^[1-9][0-9]{1,9}/', '/^[abcdef]$/'));
 
 try {
-    $controller = $router->getController($request);
-    $response = $controller->getResponse($request);
+    $result = $router->getControllerWithParams($request);
+    $controller = $result->getController();
+    $response = $controller->getResponse($request, ...$result->getParameters());
     $response->send();
 } catch (RouteNotFoundException $r) {
     echo '<h1>' . $r->getMessage() . '</h1>';

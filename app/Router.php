@@ -26,14 +26,14 @@ class Router
 
     /**
      * @param Request $request
-     * @return ControllerInterface возвращает контроллер в соответствии с запросом
+     * @return ControllerWithParameters
      * @throws RouteNotFoundException
      */
-    public function getController(Request $request): ControllerInterface
+    public function getControllerWithParams(Request $request): ControllerWithParameters
     {
         foreach ($this->routes as $route) {
            if ($route->isRequestAcceptable($request)) {
-               return $route->getController();
+               return new ControllerWithParameters($route->getController(), $route->params($request));
            }
         }
         throw new RouteNotFoundException();
@@ -59,6 +59,7 @@ class Router
 
         return $requiredRoute->getUrl($value);
     }
+
 
 
 }
