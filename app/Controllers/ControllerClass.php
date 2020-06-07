@@ -12,6 +12,11 @@ use Symfony\Component\HttpFoundation\Response;
 class ControllerClass implements ControllerInterface
 {
     /**
+     * @var array $parameters массив с параметрами
+     */
+    protected $parameters = [];
+
+    /**
      * @var Router объект
      */
     protected $router;
@@ -27,16 +32,16 @@ class ControllerClass implements ControllerInterface
 
     /**
      * @param Request $request
+     * @param array $parameters
      * @return Response
      */
-    public function getResponse(Request $request): Response
+    public function getResponse(Request $request, ...$parameters): Response
     {
-        $response = new Response(
+        $this->parameters = $parameters;
+        return new Response(
             '<h1>ControllerClass</h1>'
         );
-        return $response;
     }
-
 
 
 

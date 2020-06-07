@@ -14,6 +14,7 @@ class Router
      */
     protected $routes = [];
 
+
     /**
      * Добавляет роуты в массив с роутами
      * @param RouteInterface $route
@@ -25,32 +26,40 @@ class Router
 
     /**
      * @param Request $request
-     * @return ControllerInterface возвращает контроллер в соответствии с запросом
+     * @return ControllerWithParameters
      * @throws RouteNotFoundException
      */
-    public function getController(Request $request): ControllerInterface
+    public function getControllerWithParams(Request $request): ControllerWithParameters
     {
         foreach ($this->routes as $route) {
            if ($route->isRequestAcceptable($request)) {
-               return $route->getController();
+               return new ControllerWithParameters($route->getController(), $route->params($request));
            }
         }
-        throw new RouteNotFoundException('Данный маршрут не найден');
+        throw new RouteNotFoundException();
     }
 
     /**
-     * @param string $name
+     * @param string $name имя роута, урл которого нужно построить
+     * @param string $value параметр для роута с параметрами, по умолчанию
      * @return string возвращает урл по имени роута
      * @throws RouteNotFoundException
      */
-    public function buildRoute(string $name): string
+    public function buildRoute(string $name, string ...$value): string
     {
         foreach ($this->routes as $route) {
-            if ($route->name() === $name) {
-                return $route->url();
+            if ($route->getName() === $name) {
+                $requiredRoute = $route;
+                break;
             }
         }
-        throw new RouteNotFoundException("Роута с именем '$name' не существует");
+        if (!isset($requiredRoute)) {
+            throw new RouteNotFoundException();
+        }
+
+        return $requiredRoute->getUrl($value);
     }
+
+
 
 }

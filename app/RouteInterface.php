@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 interface RouteInterface
 {
     /**
-     * @return \MyFramework\ControllerInterface
+     * @return ControllerInterface
      */
     public function getController(): ControllerInterface;
 
@@ -23,11 +23,18 @@ interface RouteInterface
     /**
      * @return string имя роута формата 'news.list'
      */
-    public function name(): string;
+    public function getName(): string;
 
     /**
+     * @param $value
      * @return string урл роута вида `/news`
      */
-    public function url(): string;
+    public function getUrl(...$value): string;
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function params(Request $request): array;
 
 }

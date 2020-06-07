@@ -31,9 +31,9 @@ class Route implements RouteInterface
     /**
      * Route constructor.
      * @param string $url
-     * @param ControllerInterface $controller
-     * @param string $method
-     * @param string $name
+     * @param ControllerInterface $controller контроллер, обрабатывающий роут
+     * @param string $method метод, на который реагирует роут
+     * @param string $name имя роута
      */
     public function __construct(string $url, ControllerInterface $controller, string $method, string $name)
     {
@@ -62,10 +62,10 @@ class Route implements RouteInterface
         if (strstr($uri, '?')) {
             $uri = stristr($uri, '?', true);
         }
-        if (!($uri === $this->url)) {
+        if ($uri !== $this->url) {
             return false;
         }
-        if (!($request->isMethod($this->method))) {
+        if (!$request->isMethod($this->method)) {
             return false;
         }
         return true;
@@ -74,14 +74,38 @@ class Route implements RouteInterface
     /**
      * @return string имя роута формата 'news.list'
      */
-    public function name(): string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function url(): string
+    /**
+     * @param array $value вида ['название_параметра=значение_параметра', ...]
+     * @return string построенный урл
+     */
+    public function getUrl(...$value): string
     {
+        if (!empty($value)) {
+            $url = $this->url . '?';
+            $limit = count($value) - 1;
+            $i = 0;
+            while ($i < $limit) {
+                $url .= $value[$i] . '&';
+                $i++;
+            }
+            $url .= $value[$limit];
+            return $url;
+        }
         return $this->url;
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function params(Request $request): array
+    {
+        return [];
     }
 
 }
