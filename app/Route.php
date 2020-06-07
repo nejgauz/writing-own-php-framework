@@ -99,4 +99,13 @@ class Route implements RouteInterface
         return $this->url;
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function params(Request $request): array
+    {
+        return [];
+    }
+
 }

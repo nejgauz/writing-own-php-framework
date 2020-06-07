@@ -31,4 +31,10 @@ interface RouteInterface
      */
     public function getUrl(...$value): string;
 
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function params(Request $request): array;
+
 }

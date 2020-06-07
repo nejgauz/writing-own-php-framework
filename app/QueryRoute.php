@@ -7,7 +7,6 @@ namespace MyFramework;
 
 use MyFramework\MyExceptions\ParameterDoesntFitException;
 use MyFramework\MyExceptions\ParameterNotFoundException;
-use MyFramework\MyExceptions\RequestDoesntFitException;
 use Symfony\Component\HttpFoundation\Request;
 
 class QueryRoute extends Route
@@ -36,17 +35,6 @@ class QueryRoute extends Route
         parent::__construct($url, $controller, $method, $name);
         $this->urlFormat = $urlFormat;
         $this->parameterPattern = $parameterPattern;
-        $extractor = function (Request $request) {
-            if ($this->isRequestAcceptable($request)) {
-                $requestUrl = $request->server->get('REQUEST_URI');
-                preg_match($this->url, $requestUrl, $parameters);
-                $parameters[0] = false;
-                return array_filter($parameters);
-            }
-
-            throw new RequestDoesntFitException();
-        };
-        $controller->addParameterExtractor($extractor);
     }
 
     /**
@@ -94,6 +82,19 @@ class QueryRoute extends Route
         }
 
         return sprintf($this->urlFormat, ...$value);
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function params(Request $request): array
+    {
+        $requestUrl = $request->server->get('REQUEST_URI');
+        preg_match($this->url, $requestUrl, $parameters);
+        array_shift($parameters);
+
+        return $parameters;
     }
 
 }
