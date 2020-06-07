@@ -11,14 +11,15 @@ class AController extends ControllerClass
 {
     /**
      * @param Request $request
+     * @param array $parameters
      * @return Response
+     * @throws \MyFramework\MyExceptions\RouteNotFoundException
      */
-    public function getResponse(Request $request): Response
+    public function getResponse(Request $request, ...$parameters): Response
     {
-        $response = new Response(
+        return new Response(
             '<h1>' . $this->router->buildRoute('c', '40', 'f') . '</h1>'
         );
-        return $response;
     }
 
 }

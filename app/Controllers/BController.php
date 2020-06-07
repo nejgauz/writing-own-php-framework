@@ -11,14 +11,14 @@ class BController extends ControllerClass
 {
     /**
      * @param Request $request
+     * @param array $parameters
      * @return Response
      */
-    public function getResponse(Request $request): Response
+    public function getResponse(Request $request, ...$parameters): Response
     {
-        $response = new Response(
+        return new Response(
             '<h1>BController</h1>'
         );
-        return $response;
     }
 
 }

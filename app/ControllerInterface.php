@@ -10,15 +10,16 @@ use Symfony\Component\HttpFoundation\Response;
 interface ControllerInterface
 {
     /**
-     * @param Request $request
-     * @return Response
+     * ControllerInterface constructor.
+     * @param Router $router
      */
-    public function getResponse(Request $request): Response;
+    public function __construct(Router $router);
 
     /**
-     * @param callable $callback
-     * @return mixed
+     * @param Request $request
+     * @param mixed ...$parameters
+     * @return Response
      */
-    public function addParameterExtractor(callable $callback);
+    public function getResponse(Request $request, ...$parameters): Response;
 
 }
