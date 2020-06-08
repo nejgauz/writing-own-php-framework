@@ -3,36 +3,16 @@ declare(strict_types=1);
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
-use MyFramework\Controllers\AController;
-use MyFramework\Controllers\BController;
-use MyFramework\Controllers\CController;
-use MyFramework\MyExceptions\ParameterDoesntFitException;
-use MyFramework\MyExceptions\ParameterNotFoundException;
-use MyFramework\MyExceptions\RouteNotFoundException;
-use MyFramework\QueryRoute;
-use MyFramework\Route;
-use MyFramework\Router;
+use MyFramework\Controllers\FrontController;
 use Symfony\Component\HttpFoundation\Request;
 
 $request = Request::createFromGlobals();
 
-$router = new Router();
-$router->addRoute(new Route('/a', new AController($router), 'GET', 'a'));
-$router->addRoute(new Route('/b', new BController($router), 'GET', 'b'));
-$router->addRoute(new QueryRoute('~^/c/([1-9][0-9]{1,9})/profile/([abcdef])$~', new CController($router), 'GET', 'c', '/c/%d/profile/%s', '/^[1-9][0-9]{1,9}/', '/^[abcdef]$/'));
+$frontController = new FrontController();
+$response = $frontController->handle($request);
+$response->send();
 
-try {
-    $result = $router->getControllerWithParams($request);
-    $controller = $result->getController();
-    $response = $controller->getResponse($request, ...$result->getParameters());
-    $response->send();
-} catch (RouteNotFoundException $r) {
-    echo '<h1>' . $r->getMessage() . '</h1>';
-} catch (ParameterDoesntFitException $p) {
-    echo '<h1>Неверный параметр запроса</h1>';
-} catch (ParameterNotFoundException $p) {
-    echo '<h1>Параметр не указан или не совпадает количество параметров</h1>';
-}
+
 
 
 
