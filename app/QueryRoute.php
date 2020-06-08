@@ -66,7 +66,6 @@ class QueryRoute extends Route
         if (!$value) {
             throw new ParameterNotFoundException();
         }
-        $value = $value[0];
         if (count($value) !== count($this->parameterPattern)) {
             throw new ParameterNotFoundException();
         }

@@ -4,6 +4,7 @@ namespace MyFramework\Controllers;
 
 
 
+use MyFramework\MyExceptions\RouteNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,7 +14,7 @@ class AController extends ControllerClass
      * @param Request $request
      * @param array $parameters
      * @return Response
-     * @throws \MyFramework\MyExceptions\RouteNotFoundException
+     * @throws RouteNotFoundException
      */
     public function getResponse(Request $request, ...$parameters): Response
     {

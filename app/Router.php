@@ -41,7 +41,7 @@ class Router
 
     /**
      * @param string $name имя роута, урл которого нужно построить
-     * @param string $value параметр для роута с параметрами, по умолчанию
+     * @param string ...$value параметры для роута с параметрами
      * @return string возвращает урл по имени роута
      * @throws RouteNotFoundException
      */
@@ -57,7 +57,7 @@ class Router
             throw new RouteNotFoundException();
         }
 
-        return $requiredRoute->getUrl($value);
+        return $requiredRoute->getUrl(...$value);
     }
 
 
