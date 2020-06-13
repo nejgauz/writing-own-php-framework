@@ -1,10 +1,11 @@
 <?php
 
 
-namespace MyFramework\Controllers;
+namespace App\Controllers;
 
 
-use MyFramework\ControllerInterface;
+
+use MyFramework\Interfaces\ControllerInterface;
 use MyFramework\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

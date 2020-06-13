@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MyFramework;
 
 
+use MyFramework\Interfaces\ControllerInterface;
 use MyFramework\MyExceptions\ParameterDoesntFitException;
 use MyFramework\MyExceptions\ParameterNotFoundException;
 use Symfony\Component\HttpFoundation\Request;

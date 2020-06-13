@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace MyFramework;
 
 
+use MyFramework\Interfaces\RouteInterface;
 use MyFramework\MyExceptions\RouteNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace MyFramework;
 
 
+use MyFramework\Interfaces\ControllerInterface;
+
 class ControllerWithParameters
 {
     /**

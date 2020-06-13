@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace MyFramework;
+namespace MyFramework\Interfaces;
 
 
+use MyFramework\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -2,28 +2,24 @@
 declare(strict_types=1);
 
 
-namespace MyFramework\Controllers;
+namespace MyFramework;
 
 
+use MyFramework\Interfaces\RouteInterface;
 use MyFramework\MyExceptions\ParameterDoesntFitException;
 use MyFramework\MyExceptions\ParameterNotFoundException;
 use MyFramework\MyExceptions\RouteNotFoundException;
-use MyFramework\QueryRoute;
-use MyFramework\Route;
-use MyFramework\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class FrontController
 {
 
-    public function handle(Request $request): Response
+    public function handle(Request $request, Router $router, RouteInterface ...$routes): Response
     {
-        $router = new Router();
-        $router->addRoute(new Route('/a', new AController($router), 'GET', 'a'));
-        $router->addRoute(new Route('/b', new BController($router), 'GET', 'b'));
-        $router->addRoute(new QueryRoute('~^/c/([1-9][0-9]{1,9})/profile/([abcdef])$~', new CController($router), 'GET', 'c', '/c/%d/profile/%s', '/^[1-9][0-9]{1,9}/', '/^[abcdef]$/'));
-
+        foreach ($routes as $route) {
+            $router->addRoute($route);
+        }
         try {
             $result = $router->getControllerWithParams($request);
         } catch (RouteNotFoundException $r) {

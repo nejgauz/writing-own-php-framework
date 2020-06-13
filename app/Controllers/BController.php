@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-namespace MyFramework\Controllers;
+namespace App\Controllers;
+
 
 
 

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-namespace MyFramework;
+namespace MyFramework\Interfaces;
 
 
 use Symfony\Component\HttpFoundation\Request;
