@@ -5,4 +5,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # Отправлять все запросы на index.php
-RewriteRule . index.php
+RewriteRule . App/index.php
