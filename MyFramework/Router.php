@@ -15,15 +15,17 @@ class Router
      */
     protected $routes = [];
 
-
     /**
-     * Добавляет роуты в массив с роутами
-     * @param RouteInterface $route
+     * Router constructor.
+     * @param RouteInterface ...$routes
      */
-    public function addRoute(RouteInterface $route)
+    public function __construct(RouteInterface ...$routes)
     {
-        $this->routes[] = $route;
+        foreach ($routes as $route) {
+            $this->routes[] = $route;
+        }
     }
+
 
     /**
      * @param Request $request
