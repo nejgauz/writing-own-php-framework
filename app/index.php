@@ -14,12 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 $request = Request::createFromGlobals();
 
-$frontController = new FrontController();
-$router = new Router();
-$aRoute = new Route('/a', new AController($router), 'GET', 'a');
-$bRoute = new Route('/b', new BController($router), 'GET', 'b');
-$cRoute = new QueryRoute('~^/c/([1-9][0-9]{1,9})/profile/([abcdef])$~', new CController($router), 'GET', 'c', '/c/%d/profile/%s', '/^[1-9][0-9]{1,9}/', '/^[abcdef]$/');
-$response = $frontController->handle($request, $router, $aRoute, $bRoute, $cRoute);
+$aRoute = new Route('/a', new AController(), 'GET', 'a');
+$bRoute = new Route('/b', new BController(), 'GET', 'b');
+$cRoute = new QueryRoute('~^/c/([1-9][0-9]{1,9})/profile/([abcdef])$~', new CController(), 'GET', 'c', '/c/%d/profile/%s', '/^[1-9][0-9]{1,9}/', '/^[abcdef]$/');
+$router = new Router($aRoute, $bRoute, $cRoute);
+$frontController = new FrontController($router);
+$response = $frontController->handle($request);
 $response->send();
 
 

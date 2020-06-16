@@ -4,7 +4,7 @@
 namespace MyFramework\MyExceptions;
 
 
-class ParameterDoesntFitException extends \Exception
+class  ParameterDoesntFitException extends \Exception
 {
 
 }
