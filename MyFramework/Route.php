@@ -5,6 +5,7 @@ namespace MyFramework;
 
 
 use MyFramework\Interfaces\ControllerInterface;
+use MyFramework\Interfaces\MiddlewareInterface;
 use MyFramework\Interfaces\RouteInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -29,6 +30,11 @@ class Route implements RouteInterface
      * @var string
      */
     protected $name;
+
+    /**
+     * @var array of MiddlewareInterface
+     */
+    protected $middlewares = [];
 
     /**
      * Route constructor.
@@ -108,6 +114,24 @@ class Route implements RouteInterface
     public function params(Request $request): array
     {
         return [];
+    }
+
+    /**
+     * @param MiddlewareInterface ...$mws
+     */
+    public function addMiddleware(MiddlewareInterface ...$mws): void
+    {
+        foreach ($mws as $mw) {
+            $this->middlewares[] = $mw;
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getMiddleware(): array
+    {
+        return $this->middlewares;
     }
 
 }
