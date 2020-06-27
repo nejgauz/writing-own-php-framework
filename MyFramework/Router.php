@@ -29,14 +29,14 @@ class Router
 
     /**
      * @param Request $request
-     * @return ControllerWithParameters
+     * @return ControllerWithParametersWithMws
      * @throws RouteNotFoundException
      */
-    public function getControllerWithParams(Request $request): ControllerWithParameters
+    public function getControllerWithParamsWithMws(Request $request): ControllerWithParametersWithMws
     {
         foreach ($this->routes as $route) {
            if ($route->isRequestAcceptable($request)) {
-               return new ControllerWithParameters($route->getController(), $route->params($request));
+               return new ControllerWithParametersWithMws($route->getController(), $route->params($request), $route->getMiddleware());
            }
         }
         throw new RouteNotFoundException();
