@@ -37,4 +37,14 @@ interface RouteInterface
      */
     public function params(Request $request): array;
 
+    /**
+     * @param MiddlewareInterface ...$mws
+     */
+    public function addMiddleware(MiddlewareInterface ...$mws): void;
+
+    /**
+     * @return array
+     */
+    public function getMiddleware(): array;
+
 }
