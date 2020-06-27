@@ -34,12 +34,19 @@ class FrontController
     public function handle(Request $request): Response
     {
         try {
-            $result = $this->router->getControllerWithParams($request);
+            $result = $this->router->getControllerWithParamsWithMws($request);
+            $mws = $result->getMidlewares();
         } catch (RouteNotFoundException $r) {
             return new Response(
                 '<h1> Неверный адрес запроса </h1>',
                 Response::HTTP_NOT_FOUND
             );
+        }
+
+        if (!empty($mws)) {
+            foreach ($mws as $mw) {
+                $mw->before();
+            }
         }
 
         $controller = $result->getController();
@@ -51,6 +58,12 @@ class FrontController
                 '<h1> Параметр запроса не найден, либо не подходит </h1>',
                 Response::HTTP_NOT_FOUND
             );
+        } finally {
+            if (!empty($mws)) {
+                foreach ($mws as $mw) {
+                    $mw->after();
+                }
+            }
         }
 
     }
