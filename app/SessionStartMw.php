@@ -6,16 +6,19 @@ namespace App;
 
 use MyFramework\Interfaces\MiddlewareInterface;
 
-class Test implements MiddlewareInterface
+class SessionStartMw implements MiddlewareInterface
 {
 
     public function before()
     {
-        echo 'Привет!';
+        session_start();
+
     }
 
     public function after()
     {
-        echo 'Пока';
+        //
     }
+
+
 }
