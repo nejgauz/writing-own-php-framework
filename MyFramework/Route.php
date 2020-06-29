@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace MyFramework;
 
 
+use MyFramework\Interfaces\ControllerInterface;
+use MyFramework\Interfaces\RouteInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class Route implements RouteInterface

@@ -1,24 +1,26 @@
 <?php
 declare(strict_types=1);
-namespace MyFramework\Controllers;
+namespace App\Controllers;
 
 
 
+use MyFramework\Interfaces\ControllerInterface;
+use MyFramework\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AController extends ControllerClass
+class AController implements ControllerInterface
 {
     /**
      * @param Request $request
+     * @param Router $router
      * @param array $parameters
      * @return Response
-     * @throws \MyFramework\MyExceptions\RouteNotFoundException
      */
-    public function getResponse(Request $request, ...$parameters): Response
+    public function getResponse(Request $request, Router $router, ...$parameters): Response
     {
         return new Response(
-            '<h1>' . $this->router->buildRoute('c', '40', 'f') . '</h1>'
+            '<h1>' . $router->buildRoute('c', '40', 'f') . '</h1>'
         );
     }
 
