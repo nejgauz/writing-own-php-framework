@@ -7,8 +7,14 @@ namespace MyFramework\Interfaces;
 
 interface MiddlewareInterface
 {
+    /**
+     * @return mixed
+     */
     public function before();
 
+    /**
+     * @return mixed
+     */
     public function after();
 
 }
