@@ -16,7 +16,7 @@
         "psr-4": {
             "App\\": "App/",
             "MyFramework\\": "MyFramework/",
-            "Public\\": "Public"
+            "Public\\": "Public/"
         }
     }
 }
