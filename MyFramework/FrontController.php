@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace MyFramework;
 
 
+use MyFramework\MyExceptions\AuthorizationErrorException;
 use MyFramework\MyExceptions\ParameterDoesntFitException;
 use MyFramework\MyExceptions\ParameterNotFoundException;
 use MyFramework\MyExceptions\RouteNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class FrontController
 {
@@ -19,12 +21,19 @@ class FrontController
     protected $router;
 
     /**
+     * @var Session
+     */
+    protected $session;
+
+    /**
      * FrontController constructor.
      * @param Router $router
+     * @param Session $session
      */
-    public function __construct(Router $router)
+    public function __construct(Router $router, Session $session)
     {
         $this->router = $router;
+        $this->session = $session;
     }
 
     /**
@@ -33,6 +42,7 @@ class FrontController
      */
     public function handle(Request $request): Response
     {
+        $this->session->start();
         try {
             $result = $this->router->getControllerWithParamsWithMws($request);
             $mws = $result->getMidlewares();
@@ -43,13 +53,21 @@ class FrontController
             );
         }
 
-        if (!empty($mws)) {
-            foreach ($mws as $mw) {
-                $mw->before();
+        try {
+            if (!empty($mws)) {
+                foreach ($mws as $mw) {
+                    $mw->before();
+                }
             }
+        } catch (AuthorizationErrorException $a) {
+            return new Response(
+                '<h1>Авторизация не пройдена</h1>',
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         $controller = $result->getController();
+        $controller->addSession($this->session);
 
         try {
             return $controller->getResponse($request, $this->router, ...$result->getParameters());
