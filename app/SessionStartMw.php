@@ -9,6 +9,11 @@ use MyFramework\Interfaces\MiddlewareInterface;
 class SessionStartMw implements MiddlewareInterface
 {
 
+    public function __construct()
+    {
+
+    }
+
     public function before()
     {
         session_start();
