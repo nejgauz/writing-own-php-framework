@@ -4,13 +4,13 @@ namespace App\Controllers;
 
 
 
-use MyFramework\Interfaces\ControllerInterface;
+use MyFramework\BaseController;
 use MyFramework\MyExceptions\RouteNotFoundException;
 use MyFramework\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AController implements ControllerInterface
+class AController extends BaseController
 {
     /**
      * @param Request $request

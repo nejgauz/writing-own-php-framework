@@ -4,12 +4,12 @@
 namespace App\Controllers;
 
 
-use MyFramework\Interfaces\ControllerInterface;
+use MyFramework\BaseController;
 use MyFramework\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class LoginController implements ControllerInterface
+class LoginController extends BaseController
 {
 
     /**
@@ -17,7 +17,7 @@ class LoginController implements ControllerInterface
      */
     public function getResponse(Request $request, Router $router, ...$parameters): Response
     {
-        $_SESSION['user_id'] = 154;
+        $this->session->set('user_id', 156);
         return new Response(
             '<h1>Вход выполнен успешно</h1>'
         );

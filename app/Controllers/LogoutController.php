@@ -4,12 +4,12 @@
 namespace App\Controllers;
 
 
-use MyFramework\Interfaces\ControllerInterface;
+use MyFramework\BaseController;
 use MyFramework\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class LogoutController implements ControllerInterface
+class LogoutController extends BaseController
 {
 
     /**
@@ -17,7 +17,7 @@ class LogoutController implements ControllerInterface
      */
     public function getResponse(Request $request, Router $router, ...$parameters): Response
     {
-        unset($_SESSION['user_id']);
+        $this->session->remove('user_id');
         return new Response(
             '<h1>Выход успешно выполнен</h1>'
         );

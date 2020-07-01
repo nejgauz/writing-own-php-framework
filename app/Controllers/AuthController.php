@@ -4,12 +4,13 @@
 namespace App\Controllers;
 
 
-use MyFramework\Interfaces\ControllerInterface;
+use MyFramework\BaseController;
 use MyFramework\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
-class AuthController implements ControllerInterface
+class AuthController extends BaseController
 {
 
     /**
@@ -17,7 +18,7 @@ class AuthController implements ControllerInterface
      */
     public function getResponse(Request $request, Router $router, ...$parameters): Response
     {
-        if (isset($_SESSION['user_id']) && $_SESSION['user_id'] === 154) {
+        if ($this->session instanceof Session && $this->session->get('user_id') === 156) {
             return new Response(
                 '<h1>Доступ к контенту разрешен</h1>'
             );
@@ -26,10 +27,5 @@ class AuthController implements ControllerInterface
             '<h1>Доступ к контенту запрещен</h1>',
             Response::HTTP_FORBIDDEN
         );
-    }
-
-    public function isAuthorized(int $id): bool
-    {
-        
     }
 }

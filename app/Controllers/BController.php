@@ -5,12 +5,12 @@ namespace App\Controllers;
 
 
 
-use MyFramework\Interfaces\ControllerInterface;
+use MyFramework\BaseController;
 use MyFramework\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class BController implements ControllerInterface
+class BController extends BaseController
 {
     /**
      * @param Request $request
