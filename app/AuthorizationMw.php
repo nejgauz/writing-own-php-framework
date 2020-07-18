@@ -5,7 +5,7 @@ namespace App;
 
 
 use MyFramework\Interfaces\MiddlewareInterface;
-use MyFramework\MyExceptions\AuthorizationErrorException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class AuthorizationMw implements MiddlewareInterface
@@ -32,12 +32,14 @@ class AuthorizationMw implements MiddlewareInterface
 
     /**
      * @return mixed|void
-     * @throws AuthorizationErrorException
      */
-    public function before(): void
+    public function before()
     {
         if ($this->session->get('user_id') !== $this->userId ) {
-            throw new AuthorizationErrorException();
+            return new Response(
+                '<h1>Авторизация не пройдена</h1>',
+                Response::HTTP_FORBIDDEN
+            );
         }
     }
 

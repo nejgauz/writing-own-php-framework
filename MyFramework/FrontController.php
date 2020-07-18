@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace MyFramework;
 
 
-use MyFramework\MyExceptions\AuthorizationErrorException;
 use MyFramework\MyExceptions\ParameterDoesntFitException;
 use MyFramework\MyExceptions\ParameterNotFoundException;
 use MyFramework\MyExceptions\RouteNotFoundException;
@@ -42,7 +41,6 @@ class FrontController
      */
     public function handle(Request $request): Response
     {
-        $this->session->start();
         try {
             $result = $this->router->getControllerWithParamsWithMws($request);
             $mws = $result->getMidlewares();
@@ -53,17 +51,14 @@ class FrontController
             );
         }
 
-        try {
-            if (!empty($mws)) {
-                foreach ($mws as $mw) {
+        if (!empty($mws)) {
+            foreach ($mws as $mw) {
+                if ($mw->before() instanceof Response) {
+                    return $mw->before();
+                } else {
                     $mw->before();
                 }
             }
-        } catch (AuthorizationErrorException $a) {
-            return new Response(
-                '<h1>Авторизация не пройдена</h1>',
-                Response::HTTP_FORBIDDEN
-            );
         }
 
         $controller = $result->getController();
@@ -83,6 +78,5 @@ class FrontController
                 }
             }
         }
-
     }
 }
