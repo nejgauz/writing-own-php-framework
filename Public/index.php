@@ -4,6 +4,7 @@ require_once(__DIR__ . '\..\vendor\autoload.php');
 
 
 use App\AuthorizationMw;
+use App\SessionStartMw;
 use App\Controllers\AController;
 use App\Controllers\AuthController;
 use App\Controllers\BController;
@@ -26,7 +27,8 @@ $cRoute = new QueryRoute('~^/c/([1-9][0-9]{1,9})/profile/([abcdef])$~', new CCon
 $loginRoute = new Route('/login', new LoginController(), 'GET', 'login');
 $logoutRoute = new Route('/logout', new LogoutController(), 'GET', 'logout');
 $authRoute = new Route('/auth', new AuthController(), 'GET', 'auth');
-$aRoute->addMiddleware(new AuthorizationMw(156, $session));
+
+$aRoute->addMiddleware(new AuthorizationMw(156, $session), new SessionStartMw($session));
 $router = new Router($aRoute, $bRoute, $cRoute, $loginRoute, $logoutRoute, $authRoute);
 $frontController = new FrontController($router, $session);
 $response = $frontController->handle($request);

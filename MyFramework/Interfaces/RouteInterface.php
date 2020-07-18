@@ -26,7 +26,7 @@ interface RouteInterface
     public function getName(): string;
 
     /**
-     * @param $value
+     * @param $value - параметры урла
      * @return string урл роута вида `/news`
      */
     public function getUrl(...$value): string;
